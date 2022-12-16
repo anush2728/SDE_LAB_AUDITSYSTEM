@@ -225,39 +225,40 @@ def viewprofile(request):
     return render(request,'viewprofile.html')  
 
 def send_files(request):
-    
-    if request.user.role != 'Subcontractor':
-        return HttpResponse('You are not a Subcontractor')
-    
-    e = Event.objects.get(sub_id = request.user.id)
-    data = e.acts
-    act = getselected(data)
-    print(act)
     try:
-            files = UploadFile.objects.filter(e_id = e.id)
-            for i in files:
-                print(i.f_files)
+        if request.user.role != 'Subcontractor':
+            return HttpResponse('You are not a Subcontractor')
         
+        e = Event.objects.get(sub_id = request.user.id)
+        data = e.acts
+        act = getselected(data)
+        print(act)
+        try:
+                files = UploadFile.objects.filter(e_id = e.id)
+                for i in files:
+                    print(i.f_files)
+            
+        except:
+            files = None
+            filetry = UploadFile.objects.all()
+            for i in filetry:
+                print(type(i.e_id_id))
+        context = {'event':Event.objects.get(sub_id = request.user.id),'act':act,'files':files}
+        if request.method == "POST":
+            name = request.POST.get("filename")
+            myfile = request.FILES.get("uploadfile")
+            exists = UploadFile.objects.filter(f_files=myfile).exists()
+            if exists:
+                pass
+            else:
+                print(e.acts[name]['selected'],e.acts[name]['uploaded'])
+                e.acts[name]['uploaded'] = True
+                e.save()
+                print(e.acts[name]['selected'],e.acts[name]['uploaded'])
+                UploadFile(f_name=name,f_files=myfile,e_id_id = e.id).save()
+        return render(request,'uploadPage.html',context)
     except:
-        files = None
-        filetry = UploadFile.objects.all()
-        for i in filetry:
-            print(type(i.e_id_id))
-    context = {'event':Event.objects.get(sub_id = request.user.id),'act':act,'files':files}
-    if request.method == "POST":
-        name = request.POST.get("filename")
-        myfile = request.FILES.get("uploadfile")
-        exists = UploadFile.objects.filter(f_files=myfile).exists()
-        if exists:
-            pass
-        else:
-            print(e.acts[name]['selected'],e.acts[name]['uploaded'])
-            e.acts[name]['uploaded'] = True
-            e.save()
-            print(e.acts[name]['selected'],e.acts[name]['uploaded'])
-            UploadFile(f_name=name,f_files=myfile,e_id_id = e.id).save()
-    return render(request,'uploadPage.html',context)
-
+        return HttpResponse('Please wait until you are alloted to an event')
 
 def view_files(request):
     if request.user.role == 'Subcontractor':
