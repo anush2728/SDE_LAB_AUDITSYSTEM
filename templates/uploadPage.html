@@ -39,8 +39,8 @@
               <th scope="col">#</th>
               <th scope="col">Act Name</th>
               <th scope="col">Upload Status</th>
-              <th scope="col">Document</th>
               <th scope="col">Observation</th>
+              <th scope="col">Document</th>
             </tr>
           </thead>
           <tbody>
@@ -49,12 +49,16 @@
               <th scope="row"></th>
               <td>{{ i }}</td>
               <td>{{ j }}</td>
+              {% for a,ob in event.observation.items %}
+                {% if a == i %}
+                <td><p>{{ ob }}</p></td>
+                {% endif %}
+              {% endfor %}
               {% for file in files %}
               {% if file.f_name == i and file.e_id_id == event.id  %}
                 <td><a href="{{ file.f_files.url }}" target="_blank">{{ file.f_files }}</td>
               {% endif %}
               {% endfor %}
-              <td><textarea type="text" class="form-control" name="message" rows="7" data-form-field="Message" id="message-form1-4"></textarea></td>
             </tr>
             {% endfor %}
           </tbody>

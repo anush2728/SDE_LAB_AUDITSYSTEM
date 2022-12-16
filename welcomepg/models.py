@@ -14,6 +14,16 @@ def create_json():
     #print(data)
     return new
 
+def obser_json():
+    data = list(Act.objects.values())
+    new = {}
+    for i in data:
+        new[i['act_name']] = ""
+    #print(data)
+    return new 
+
+
+
 class User(AbstractUser):        
     contact_number=models.BigIntegerField(null=True)
     related = models.IntegerField(null=True)
@@ -94,6 +104,7 @@ class Event(models.Model):
     event_date = models.DateField('Event Date',max_length=30,null=True)
     event_time = models.TimeField('Event Time',max_length=30,null=True)
     acts = models.JSONField(default=create_json)
+    observation = models.JSONField(default=obser_json)
 
     def __str__(self):
         return f"{self.audit} - {self.sub}"
@@ -103,6 +114,6 @@ class UploadFile(models.Model):
     #a_name = models.ForeignKey(to=Act,on_delete=models.CASCADE,null=True)
     f_files = models.FileField(upload_to="")
     e_id = models.ForeignKey(to=Event,on_delete=models.CASCADE,null=True)
-    observation = models.TextField(null=True)
+    
     def __str__(self):
         return self.f_name
