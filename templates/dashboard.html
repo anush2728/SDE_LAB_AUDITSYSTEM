@@ -1,0 +1,186 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+  
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar {
+  overflow: hidden;
+  background-color: #333;  
+  position: sticky;
+  top: 0;
+  width: 100%;
+}
+
+.navbar a {
+  float: right;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.navbar a:hover {
+    background-color: rgb(15, 151, 156);
+  color: black;
+}
+
+.navbar a.active {
+  background-color: rgb(156, 15, 74);
+  color: whitesmoke;
+}
+
+
+.navbar .icon {
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .navbar a:not(:first-child) {display: none;}
+  .navbar a.icon {
+    float: right;
+    display: block;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .navbar.responsive .icon {
+    position: absolute;
+    right: 0;
+    bottom:0;
+  }
+  .navbar.responsive a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: rgb(94, 16, 16);
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+}
+
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 15px;
+  color: #ffffff;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav b {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  text-decoration-line: underline;
+  font-size: 15px;
+  color: #e1cdcd;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav a:hover {
+  color: #021002;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+</style>
+</head>
+<body>
+
+  <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">  
+  <script src="{% static 'js/bootstrap.min.js' %}"></script>  
+
+<div class="navbar" id="myNavbar">
+    <a class="active">Hello {{ request.user.username }}</a>
+    <a href="/admin">Settings</a>
+    <a href="/viewprofile">View Profile</a>
+    <a href="/logout">Logout</a>
+    <a href="/home" >Home</a>
+    <a href="javascript:void(0);" style="font-size:15px;" class="icon" onclick="myFunction()">&#9776;</a>
+    <span style="font-size:30px;position:relative;color:rgb(14, 6, 6);cursor:pointer" onclick="openNav()">&#9776; </span>
+
+</div>
+
+<div style="padding-left:16px">
+ 
+</div>
+{% if request.user.is_superuser %}
+<div id="mySidenav" class="sidenav">
+    <head><b>Dashboard</b></head>
+    <a href="javascript:void(0)" name="Dashboard" class="closebtn" onclick="closeNav()">&times;</a>
+    <a href="/createnewuser">User Management</a>
+    <a href="/userlist">View Users</a>
+    <a href="/actmaster">Act Master</a>
+    <a href="/events">Event Management</a>
+  </div>
+{% elif request.user.role == 'Subcontractor' %}
+<div id="mySidenav" class="sidenav">
+  <head><b>Dashboard</b></head>
+  <a href="javascript:void(0)" name="Dashboard" class="closebtn" onclick="closeNav()">&times;</a>
+  
+</div>
+{% elif request.user.role == 'Auditor' %}
+<div id="mySidenav" class="sidenav">
+  <head><b>Dashboard</b></head>
+  <a href="javascript:void(0)" name="Dashboard" class="closebtn" onclick="closeNav()">&times;</a>
+  
+</div>
+{% endif %}
+  
+  
+  
+  
+  {% block body %} {% endblock body %}
+<script>
+function myFunction() {
+  var x = document.getElementById("myNavbar");
+  if (x.className === "navbar") {
+    x.className += " responsive";
+  } else {
+    x.className = "navbar";
+  }
+}
+function openNav() {
+  document.getElementById("mySidenav").style.width = "200px";
+}
+
+function closeNav() {
+  document.getElementById("mySidenav").style.width = "0";
+}
+
+
+</script>
+
+</body>
+</html>

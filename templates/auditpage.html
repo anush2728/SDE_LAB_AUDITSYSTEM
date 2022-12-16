@@ -1,0 +1,77 @@
+{% extends 'dashboard.html' %}
+
+{% block body %}
+<style>
+  .button {
+    appearance: none;
+    background-color: #2ea44f;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 6px;
+    box-shadow: rgb(27 31 35 / 10%) 0 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 6px 16px;
+    position: right;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+} 
+  .container {
+    padding: 40px;
+    background-color: rgb(210, 199, 199);
+  }
+</style>
+{% load static %}  
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">  
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>  
+    <h1> List Of Events</h1>
+  <div class="container">
+    {% csrf_token %}
+    <div class="row">
+     {% for a in adl %}
+     <div class="col-lg-6 mb-4">
+                <div class="card" style="width: 25rem;">
+                  <div class="card-body">
+                    <h5 class="card-title">Event ID: {{a.id}}</h5>
+                    {% for b in udl %}
+                    <br>
+                    {% if b.id == a.sub.id %}
+                    <h6 class="card-subtitle mb-2 text-muted">Subcontractor: {{b.username}} </h6>
+                    {% endif %}
+                    {% endfor %}
+                    <br>
+                    <p class="card-text">Event Date: {{a.event_date}} </p>
+                    <br>
+
+                    <p class="card-text">Event Time: {{a.event_time}} </p>
+
+                    
+                    <a href="/aevents/{{ a.sub.id }}" class="card-link">View Event details</a>
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked" checked>
+                      <label class="form-check-label" for="flexCheckChecked">
+                  </div>
+                </div>
+                {% endfor %}
+              </div>
+    
+  </div>
+  </div>
+</div>
+  <div>
+    <a type="button" class="btn btn-outline-success" href="#">Update Approval</a>
+  </div>  
+  </div>
+ 
+
+{% endblock %}  

@@ -1,0 +1,176 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+{% block body %}
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: white;
+}
+
+
+* {
+  box-sizing: border-box;
+}
+
+/* Add padding to containers */
+.container {
+  padding: 20px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+input[type=text]{
+  width: 50%;
+  padding: 20px;
+  margin: 5px 0 22px 0;
+  display: inline-block;
+  border: none;
+  background: #f1f1f1;
+}
+
+input[type=text]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Overwrite default styles of hr */
+hr {
+  border: 1px solid #f1f1f1;
+  margin-bottom: 25px;
+}
+
+/* Set a style for the submit button */
+.registerbtn {
+  background-color: #045daa;
+  color: white;
+  padding: 16px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 50%;
+  opacity: 0.7;
+}
+
+.registerbtn:hover {
+  opacity: 1;
+}
+
+/* Add a blue text color to links */
+a {
+  color: dodgerblue;
+}
+
+/* Set a grey background color and center the text of the "sign in" section */
+.signin {
+  background-color: #f1f1f1;
+  text-align: center;
+}
+/*------------------------------------------------*/
+
+
+
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+</style>
+</head>
+<body>
+    
+    <form action="events" method="post">
+      {% csrf_token %}
+        <div class="container">
+          {% load static %}  
+          <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">  
+          <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+          <script src="{% static 'js/bootstrap.min.js' %}"></script>  
+          <h1>Create Your Events</h1>
+          <hr>
+          <label for="en"><br></label>
+          <input type="text" placeholder="Enter Event Name" name="en"required="required">
+
+          <br>
+          <b>Select Auditor:</b>
+          <select name="Auditor" id="type" style="max-width:30%; background-color:transparent; "  class="form-select" >
+            {% for ad in a %}
+            <option value="{{ad.username}}">{{ad.username}}</option>
+            {% endfor %}
+          </select>
+          <br>
+          <b>Select Contractor:</b>
+          <select name="Subcontractor" id="type" style="max-width:30%; background-color:transparent; "  class="form-select" >
+            {% for ad in s %}
+            <option value="{{ad.username}}">{{ad.username}}</option>
+            {% endfor %}
+          </select>
+         
+          <br>
+          <div class="container">
+            
+            <caption><b>List of Acts</b></caption>  
+          <div class="table-container">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Act Name</th>
+                <th scope="col">Act Short Name</th>
+                <th scope="col">Select Act</th>
+              </tr>
+            </thead>
+            <tbody >
+              {% for a in ac %}
+              <tr>
+                <td>{{ a.act_name }}</td>
+                <td>{{ a.act_shname }}</td>
+                <td><div class="form-check">
+                  <input class="form-check-input" type="checkbox" value="{{ a.act_name }}" id="flexCheckDefault" name= "checks[]">
+                  <label class="form-check-label" for="flexCheckDefault">
+                  </label>
+                </div></td>
+              </tr>
+              {% endfor %} 
+            </tbody>
+          </table> 
+          </div>
+          </div> 
+          <br>
+          
+          <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+          <script src="https://unpkg.com/gijgo@1.9.14/js/gijgo.min.js" type="text/javascript"></script>
+          <link href="https://unpkg.com/gijgo@1.9.14/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+          <b> Set Deadline Date: </b>
+          <input name ="date" id="datepicker" width="276" /> 
+          <script>
+              $('#datepicker').datepicker({
+                  uiLibrary: 'bootstrap4'
+              });
+          </script>
+          <br>
+         <b> Set Deadline Time: </b>
+          <input name="time" id="timepicker" width="276" />
+          <br>
+          
+          <button type="submit" class="btn btn-outline-success">Create Event</button>
+       </div>
+        
+          
+           <script>
+            $('#timepicker').timepicker({
+                uiLibrary: 'bootstrap4'
+            });
+           </script>
+          
+      
+      </form>
+
+
+<div style="padding-left:36px;">
+
+</div>
+</body>
+{% endblock body %}
+{% endblock %} 

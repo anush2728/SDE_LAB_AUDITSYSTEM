@@ -1,0 +1,66 @@
+{% extends 'dashboard.html' %}
+{% block body %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/js/bootstrap.min.js" integrity="sha512-5BqtYqlWfJemW5+v+TZUs22uigI8tXeVah5S/1Z6qBLVO7gakAOtkOzUtgq6dsIo5c0NJdmGPs0H9I+2OHUHVQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap-grid.min.css" integrity="sha512-a+PObWRxNVh4HZR9wijCGj84JgJ/QhZ8dET09REfYz2clUBjKYhGbOmdy9KEHilYKgbMSIHNQEsonv/r75mHXw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.2.2/css/bootstrap.min.css" integrity="sha512-CpIKUSyh9QX2+zSdfGP+eWLx23C8Dj9/XmHjZY2uDtfkdLGo0uY12jgcnkX9vXOgYajEKb/jiw67EYm+kBf+6g==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+    <div class="container">
+      <title>Document Uploader</title>
+  </head>
+  <body>
+    {% if request.user.role == 'Subcontractor' %}
+      {% if event.sub_id == request.user.id %}
+        <h1>EVENT : {{ event }}</h1>
+            <form action="{% url 'upload' %}" method="POST" enctype="multipart/form-data">
+                <label for="inputAct" class="form-label">Upload acts</label>
+                <select id="inputAct" class="form-select" name ="filename" style="max-width:10%; background-color:transparent; ">
+                {% for jact,jdic in event.acts.items %}
+                  {% if jdic.selected == True and jdic.uploaded != True %}
+                        <option>{{ jact }}</option>
+                  {% endif %}
+                {% endfor %}
+                </select>
+                <input type="file" name="uploadfile" >
+                {% csrf_token %}
+                <button type="submit">File Upload</button>     
+      {% endif %}
+    {% endif %}
+  </body>
+  </div>
+  <div class="container">
+    <table class="table table-hover">
+        <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Act Name</th>
+              <th scope="col">Upload Status</th>
+              <th scope="col">Document</th>
+              <th scope="col">Observation</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for i,j in act.items %}
+            <tr>
+              <th scope="row"></th>
+              <td>{{ i }}</td>
+              <td>{{ j }}</td>
+              {% for file in files %}
+              {% if file.f_name == i and file.e_id_id == event.id  %}
+                <td><a href="{{ file.f_files.url }}" target="_blank">{{ file.f_files }}</td>
+              {% endif %}
+              {% endfor %}
+              <td><textarea type="text" class="form-control" name="message" rows="7" data-form-field="Message" id="message-form1-4"></textarea></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+    </table>
+
+
+</body>
+
+{% endblock %}

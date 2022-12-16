@@ -1,0 +1,85 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+{% block body %}
+<style>
+  .button {
+    appearance: none;
+    background-color: #2ea44f;
+    border: 1px solid rgba(27, 31, 35, .15);
+    border-radius: 6px;
+    box-shadow: rgb(27 31 35 / 10%) 0 1px 0;
+    box-sizing: border-box;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    padding: 6px 16px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    vertical-align: middle;
+    white-space: nowrap;
+} 
+  .container {
+    padding: 40px;
+    background-color: white;
+  }
+</style>
+{% load static %}  
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">  
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>  
+  <div class="container">
+    <span class="d-block p-2 text-bg-dark">User Details</span>
+    <br>
+    {% csrf_token %}
+
+    <div class="mb-3 row">
+        <label for="Username" class="col-sm-2 col-form-label">Username</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext"  value="{{ request.user.username }}">
+        </div>
+
+        <label for="E-mail" class="col-sm-2 col-form-label">E-mail</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext"  value="{{ request.user.email }}">
+        </div>
+
+        <label for="First-Name" class="col-sm-2 col-form-label">First Name</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext"  value="{{ request.user.first_name }}">
+        </div>
+
+        <label for="Last-Name" class="col-sm-2 col-form-label">Last Name</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext"  value="{{ request.user.last_name }}">
+        </div>
+
+        <label for="Contact-Number" class="col-sm-2 col-form-label">Contact Number</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext"  value="{{ request.user.contact_number }}">
+        </div>
+
+        <label for="Role" class="col-sm-2 col-form-label">Role</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext"  value="{{ request.user.role }}">
+        </div>
+
+        <label for="Last login" class="col-sm-2 col-form-label">Last login</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext"  value="{{ request.user.last_login }}">
+        </div>
+
+        <label for="Date joined" class="col-sm-2 col-form-label">Date Joined</label>
+        <div class="col-sm-10">
+          <input type="text" readonly class="form-control-plaintext"  value="{{ request.user.date_joined }}">
+        </div>
+      </div>
+      {% endblock body %}
+      {% endblock %}      
