@@ -1,4 +1,4 @@
-# Final-SDE
+# Project Images
 ![b1](https://github.com/anush2728/SDE_LAB_AUDITSYSTEM/assets/113098910/f61495ba-921e-4091-b71e-ebf11301e596)
 ![b2](https://github.com/anush2728/SDE_LAB_AUDITSYSTEM/assets/113098910/4d1d8e00-e2a8-456d-9bb8-7720e9129516)
 ![b3](https://github.com/anush2728/SDE_LAB_AUDITSYSTEM/assets/113098910/3147dc73-e9d7-4af3-9da4-a77b04d4203a)
